@@ -3,6 +3,7 @@ package com.example.ohdaekyoung.miniapplication.store;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +21,18 @@ public class TStoreFragment extends Fragment {
         // Required empty public constructor
     }
 
+    FragmentTabHost tabHost;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tstore, container, false);
+        View view=inflater.inflate(R.layout.fragment_tstore, container, false);
+        tabHost=(FragmentTabHost)view.findViewById(R.id.tabHost);
+        tabHost.setup(getContext(),getChildFragmentManager(),android.R.id.tabcontent);
+        tabHost.addTab(tabHost.newTabSpec("Category").setIndicator(getString(R.string.tstore_tab_category_title)), TStoreCategortFragment.class, null);
+        tabHost.addTab(tabHost.newTabSpec("Search").setIndicator(getString(R.string.tstore_tab_search_title)),TStoreSearchFragment.class,null);
+        return view;
     }
 
 }

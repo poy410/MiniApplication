@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         if(savedInstanceState==null)//맨처음 구동되면
         {
-            getSupportFragmentManager().beginTransaction().add(R.id.container,new TStoreFragment());
+            getSupportFragmentManager().beginTransaction().add(R.id.container,new TStoreFragment()).commit();
         }
 
     }
