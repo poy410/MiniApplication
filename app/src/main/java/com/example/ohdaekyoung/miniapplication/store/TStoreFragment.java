@@ -46,6 +46,10 @@ public class TStoreFragment extends Fragment {
         textView=(TextView)tabHeader.findViewById(R.id.text_title);
         textView.setText("Search");
         tabHost.addTab(tabHost.newTabSpec("search").setIndicator(tabHeader),TStoreSearchFragment.class,null);
+        tabHeader = inflater.inflate(R.layout.tab_header, tabWidget, false);
+        textView=(TextView)tabHeader.findViewById(R.id.text_title);
+        textView.setText("TEST");
+        tabHost.addTab(tabHost.newTabSpec("TEST").setIndicator(tabHeader),TStoreTestFragment.class,null);
         return view;
     }
 

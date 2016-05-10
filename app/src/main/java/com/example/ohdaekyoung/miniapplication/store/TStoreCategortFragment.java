@@ -39,6 +39,7 @@ public class TStoreCategortFragment extends Fragment {
                 Toast.makeText(getContext(), "code : " + category.getCategoryCode(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), TStoreAppListActivity.class);
                 intent.putExtra(TStoreAppListActivity.EXTRA_CATEGORY_CODE, category.getCategoryCode());
+
                 startActivity(intent);
             }
         });

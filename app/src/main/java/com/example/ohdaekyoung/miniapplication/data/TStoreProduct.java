@@ -1,5 +1,11 @@
 package com.example.ohdaekyoung.miniapplication.data;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by OhDaeKyoung on 2016. 5. 9..
  */
@@ -15,6 +21,107 @@ public class TStoreProduct {
     String tinyUrl;
     String detailDescription;
     String productId;
+    String platfrom;
+    String developerId;
+    String osVersion;
+    String categoryCode;
+    @SerializedName("previewUrl")
+    String rawPreviewUrls;
+    List<String> previewUrlList=new ArrayList<>();
+    public  boolean makePreviewUrlList(){
+        if(rawPreviewUrls!=null)
+        {
+            String[] urls=rawPreviewUrls.split(";");
+            previewUrlList.addAll(Arrays.asList(urls)); //문자열 잘린걸 리스트ㅗ 만들어 넣는다
+            return true;
+        }
+        return false;
+    }
+    int voterCount;
+    TStorePhoneModels models;
+    String categoryName;
+    String developerName;
+
+    public String getPlatfrom() {
+        return platfrom;
+    }
+
+    public void setPlatfrom(String platfrom) {
+        this.platfrom = platfrom;
+    }
+
+    public String getDeveloperId() {
+        return developerId;
+    }
+
+    public void setDeveloperId(String developerId) {
+        this.developerId = developerId;
+    }
+
+    public String getOsVersion() {
+        return osVersion;
+    }
+
+    public void setOsVersion(String osVersion) {
+        this.osVersion = osVersion;
+    }
+
+    public String getCategoryCode() {
+        return categoryCode;
+    }
+
+    public void setCategoryCode(String categoryCode) {
+        this.categoryCode = categoryCode;
+    }
+
+    public String getRawPreviewUrls() {
+        return rawPreviewUrls;
+    }
+
+    public void setRawPreviewUrls(String rawPreviewUrls) {
+        this.rawPreviewUrls = rawPreviewUrls;
+    }
+
+    public int getVoterCount() {
+        return voterCount;
+    }
+
+    public void setVoterCount(int voterCount) {
+        this.voterCount = voterCount;
+    }
+
+    public List<String> getPreviewUrlList() {
+        return previewUrlList;
+    }
+
+    public void setPreviewUrlList(List<String> previewUrlList) {
+        this.previewUrlList = previewUrlList;
+    }
+
+    public TStorePhoneModels getModels() {
+        return models;
+
+    }
+
+    public void setModels(TStorePhoneModels models) {
+        this.models = models;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getDeveloperName() {
+        return developerName;
+    }
+
+    public void setDeveloperName(String developerName) {
+        this.developerName = developerName;
+    }
 
     public String getCategoryPath() {
         return categoryPath;

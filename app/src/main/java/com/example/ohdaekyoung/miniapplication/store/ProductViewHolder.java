@@ -50,7 +50,7 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
         this.product = product;
 
 
-        Glide.with(thumbView.getContext()).load(product.getThumbnailUrl()).into(thumbView);
+        Glide.with(thumbView.getContext()).load(this.product.getThumbnailUrl()).into(thumbView);
 
         nameView.setText(product.getName());
         descriptionView.setText(product.getDescription());

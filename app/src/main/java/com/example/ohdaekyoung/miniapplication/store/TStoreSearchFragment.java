@@ -48,7 +48,8 @@ public class TStoreSearchFragment extends Fragment {
             @Override
             public void onItemClick(View view, TStoreProduct product) {
                 Intent intent = new Intent(getContext(), TStoreDetailActivity.class);
-                intent.setData(Uri.parse(product.getWebUrl()));
+               // intent.setData(Uri.parse(product.getWebUrl()));
+                intent.putExtra(TStoreDetailActivity.EXTRA_PRODUCT_ID,product.getProductId());
                 startActivity(intent);
             }
         });
