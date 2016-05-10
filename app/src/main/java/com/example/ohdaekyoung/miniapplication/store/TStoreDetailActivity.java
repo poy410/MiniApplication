@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -28,6 +29,7 @@ public class TStoreDetailActivity extends AppCompatActivity {
     WebView webView;
     RecyclerView listview;
     ProductDetailManager mAdapter;
+    GridLayoutManager manager;
     String productId;
     public static final String EXTRA_PRODUCT_ID="product_id";
     @Override
@@ -35,11 +37,25 @@ public class TStoreDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tstore_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+
         setSupportActionBar(toolbar);
         mAdapter=new ProductDetailManager();
+        manager=new GridLayoutManager(this,2);  //
+        manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) { //포지션에 따라 한칸을 차지할거냐 두칸을 차지할거냐
+                int type=mAdapter.getItemViewType(position);
+                if(type==ProductDetailManager.VIEW_TYPED_HEADER || type==ProductDetailManager.VIEW_TYPE_TITLE)
+                {return 2;}
+                else{
+                    return 1;
+                }
+            }
+        });
         listview=(RecyclerView)findViewById(R.id.rv_list_detail);
         listview.setAdapter(mAdapter);
-        listview.setLayoutManager(new LinearLayoutManager(this));
+        listview.setLayoutManager(manager);
         Intent intent=getIntent();
         productId=intent.getStringExtra(EXTRA_PRODUCT_ID);
 

@@ -12,10 +12,10 @@ import com.example.ohdaekyoung.miniapplication.data.TStoreProduct;
 
 
 public class ProductDetailManager extends RecyclerView.Adapter<RecyclerView.ViewHolder> { //네가지 타입 모두 쓰기위해
-    private static final int VIEW_TYPED_HEADER = 1;
-    private static final int VIEW_TYPE_TITLE = 2;
-    private static final int VIEW_TYPE_PREVIEW = 3;
-    private static final int VIEW_TYPE_MODEL = 4;
+    public static final int VIEW_TYPED_HEADER = 1;
+    public static final int VIEW_TYPE_TITLE = 2;
+    public static final int VIEW_TYPE_PREVIEW = 3;
+    public static final int VIEW_TYPE_MODEL = 4;
     TStoreProduct product; // 얘가 데이터니까
 
     @Override

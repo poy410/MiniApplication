@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -54,7 +55,7 @@ public class TStoreSearchFragment extends Fragment {
             }
         });
     }
-    LinearLayoutManager manager;
+    GridLayoutManager  manager;
     boolean isLast=false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,7 +63,7 @@ public class TStoreSearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tstore_search, container, false);
         listView = (RecyclerView)view.findViewById(R.id.rv_list);
         listView.setAdapter(mAdapter);
-        manager=new LinearLayoutManager(getContext());
+        manager=new GridLayoutManager(getContext(),2);
         listView.setLayoutManager(manager);
         listView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
