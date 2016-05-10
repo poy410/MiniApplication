@@ -11,57 +11,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by OhDaeKyoung on 2016. 5. 9..
+ * Created by dongja94 on 2016-05-09.
  */
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
-    List<TStoreCategory> items=new ArrayList<>();
 
-    public void add(TStoreCategory t)
-    {
-        items.add(t);
-        notifyDataSetChanged();
-    }
-    public void addAll(List<TStoreCategory> item){
-        this.items.addAll(item);
-        notifyDataSetChanged();
-    }
-    public void clear(){
+    List<TStoreCategory> items = new ArrayList<TStoreCategory>();
+
+    public void clear() {
         items.clear();
         notifyDataSetChanged();
     }
 
-    public CategoryAdapter() {
-        super();
+    public void add(TStoreCategory category) {
+        items.add(category);
+        notifyDataSetChanged();
+    }
+
+    public void addAll(List<TStoreCategory> items) {
+        this.items.addAll(items);
+        notifyDataSetChanged();
+    }
+    CategoryViewHolder.OnItemClickListener mListener;
+    public void setOnItemClickListener(CategoryViewHolder.OnItemClickListener listener) {
+        mListener = listener;
+    }
+
+    @Override
+    public CategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_list_item_1, null);
+        return new CategoryViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(CategoryViewHolder holder, int position) {
         holder.setCategory(items.get(position));
-        holder.setOnItemClickListener(mListner);
-
-    }
-    CategoryViewHolder.OnItemClickListener mListner;
-    public void setOnItemClickListener(CategoryViewHolder.OnItemClickListener listener)
-    {
-        mListner=listener;
-    }
-    @Override
-    public CategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_list_item_1,null);
-        return new CategoryViewHolder(view);
+        holder.setOnItemClickListener(mListener);
     }
 
     @Override
     public int getItemCount() {
         return items.size();
-    }
-
-
-
-
-
-    @Override
-    public long getItemId(int position) {
-        return super.getItemId(position);
     }
 }

@@ -7,8 +7,12 @@ import android.support.v4.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TabWidget;
+import android.widget.TextView;
 
 import com.example.ohdaekyoung.miniapplication.R;
+
+import org.w3c.dom.Text;
 
 
 /**
@@ -22,7 +26,7 @@ public class TStoreFragment extends Fragment {
     }
 
     FragmentTabHost tabHost;
-
+    TextView textView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -30,8 +34,18 @@ public class TStoreFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_tstore, container, false);
         tabHost=(FragmentTabHost)view.findViewById(R.id.tabHost);
         tabHost.setup(getContext(),getChildFragmentManager(),android.R.id.tabcontent);
-        tabHost.addTab(tabHost.newTabSpec("Category").setIndicator(getString(R.string.tstore_tab_category_title)), TStoreCategortFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec("Search").setIndicator(getString(R.string.tstore_tab_search_title)),TStoreSearchFragment.class,null);
+
+        TabWidget tabWidget=(TabWidget)tabHost.findViewById(android.R.id.tabs);
+
+        View tabHeader = inflater.inflate(R.layout.tab_header, tabWidget, false);
+         textView=(TextView)tabHeader.findViewById(R.id.text_title);
+        textView.setText("Category");
+      //  tabHost.setup(getContext(),getChildFragmentManager(),android.R.id.tabcontent);
+        tabHost.addTab(tabHost.newTabSpec("category").setIndicator(tabHeader), TStoreCategortFragment.class, null);
+        tabHeader = inflater.inflate(R.layout.tab_header, tabWidget, false);
+        textView=(TextView)tabHeader.findViewById(R.id.text_title);
+        textView.setText("Search");
+        tabHost.addTab(tabHost.newTabSpec("search").setIndicator(tabHeader),TStoreSearchFragment.class,null);
         return view;
     }
 

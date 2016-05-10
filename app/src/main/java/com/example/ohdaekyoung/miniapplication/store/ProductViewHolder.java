@@ -7,22 +7,25 @@ import android.widget.TextView;
 
 import com.example.ohdaekyoung.miniapplication.R;
 import com.example.ohdaekyoung.miniapplication.data.TStoreProduct;
+import com.bumptech.glide.Glide;
 
 /**
- * Created by OhDaeKyoung on 2016. 5. 9..
+ * Created by dongja94 on 2016-05-09.
  */
 public class ProductViewHolder extends RecyclerView.ViewHolder {
     ImageView thumbView;
     TextView nameView, descriptionView, scoreView, downloadView, detailView;
+
     TStoreProduct product;
+
     public interface OnItemClickListener {
         public void onItemClick(View view, TStoreProduct product);
     }
-    ProductViewHolder.OnItemClickListener mListener;
 
-    public void setOnItemClickListener(ProductViewHolder.OnItemClickListener listener)
-    {
-        mListener=listener;
+    OnItemClickListener mListener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
     }
 
     public ProductViewHolder(View itemView) {
@@ -41,11 +44,13 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
                 }
             }
         });
-
     }
+
     public void setProduct(TStoreProduct product) {
         this.product = product;
 
+
+        Glide.with(thumbView.getContext()).load(product.getThumbnailUrl()).into(thumbView);
 
         nameView.setText(product.getName());
         descriptionView.setText(product.getDescription());
@@ -53,5 +58,4 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
         downloadView.setText(""+product.getDownloadCount());
         detailView.setText(product.getDetailDescription());
     }
-
 }
