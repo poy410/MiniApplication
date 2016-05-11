@@ -11,5 +11,54 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.ohdaekyoung.miniapplication.facebook.FacebookWriteActivity"
     tools:showIn="@layout/activity_facebook_write">
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textinput_1">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_facebook_write"/>
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textinput_2"
+        android:layout_below="@+id/textinput_1">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_facebook_caption"/>
+
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textinput_3"
+        android:layout_below="@+id/textinput_2">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_facebook_3"/>
+
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textinput_4"
+        android:layout_below="@+id/textinput_3">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_facebook_description"/>
+
+
+    </android.support.design.widget.TextInputLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textinput_4"
+        android:id="@+id/image_facebook"/>
+
 
 </RelativeLayout>

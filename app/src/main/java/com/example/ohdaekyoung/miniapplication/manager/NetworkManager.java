@@ -6,12 +6,17 @@ import android.os.Looper;
 import android.os.Message;
 
 import com.example.ohdaekyoung.miniapplication.MyApplication;
+import com.example.ohdaekyoung.miniapplication.data.FacebookFeed;
+import com.example.ohdaekyoung.miniapplication.data.FacebookFeedsResult;
+import com.example.ohdaekyoung.miniapplication.data.FacebookUploadResult;
+import com.example.ohdaekyoung.miniapplication.data.MyInfo;
 import com.example.ohdaekyoung.miniapplication.data.TStoreCategory;
 import com.example.ohdaekyoung.miniapplication.data.TStoreCategoryProduct;
 import com.example.ohdaekyoung.miniapplication.data.TStoreCategoryProductResult;
 import com.example.ohdaekyoung.miniapplication.data.TStoreCategoryResult;
 import com.example.ohdaekyoung.miniapplication.data.TStoreProduct;
 import com.example.ohdaekyoung.miniapplication.data.TStoreProductDetailResult;
+import com.example.ohdaekyoung.miniapplication.facebook.FacebookIdResult;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -26,9 +31,13 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Cache;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.JavaNetCookieJar;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -251,5 +260,127 @@ public class NetworkManager {
         });
         return request;
     }
+    private static final String FACEBOOK_SERVER = "https://graph.facebook.com";
+    private static final String FACEBOOK_FEEDS = FACEBOOK_SERVER +"/v2.6/me/feed?access_token=%s";
+    public Request getFacebookFeed(Object tag, String token,OnResultListener<List<FacebookFeed>> listener) {
+        String url = String.format(FACEBOOK_FEEDS, token);
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        final NetworkResult<List<FacebookFeed>> result = new NetworkResult<>();
+        result.request = request;
+        result.listener = listener;
+        mClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                result.excpetion = e;
+                mHandler.sendMessage(mHandler.obtainMessage(MESSAGE_FAIL, result));
+            }
 
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    FacebookFeedsResult data = gson.fromJson(response.body().charStream(), FacebookFeedsResult.class);
+                    result.result = data.data;
+                    mHandler.sendMessage(mHandler.obtainMessage(MESSAGE_SUCCESS, result));
+                } else {
+                    throw new IOException(response.message());
+                }
+            }
+        });
+        return request;
+    }
+
+    private static final String FACEBOOK_POST = FACEBOOK_SERVER +"/v2.6/me/feed?access_token=%s";
+    public Request getFacebookPost(Object tag,
+                                   String token,
+                                   String message,
+                                   String caption,
+                                   String link,
+                                   String picture,
+                                   String name,
+                                   String description,
+                                   OnResultListener<String> listener) {
+        String url = String.format(FACEBOOK_POST, token);
+        RequestBody body=new FormBody.Builder()
+                .add("message",message)
+                .add("link",link)
+                .add("caption",caption)
+                .add("picture",picture)
+                .add("name",name)
+                .add("description",description)
+                .build();
+
+        Request request=new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+        final NetworkResult<String> result = new NetworkResult<>();
+        result.request = request;
+        result.listener = listener;
+        mClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                result.excpetion = e;
+                mHandler.sendMessage(mHandler.obtainMessage(MESSAGE_FAIL, result));
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    FacebookIdResult data = gson.fromJson(response.body().charStream(), FacebookIdResult.class);
+                    result.result = data.id;
+                    mHandler.sendMessage(mHandler.obtainMessage(MESSAGE_SUCCESS, result));
+                } else {
+                    throw new IOException(response.message());
+                }
+            }
+        });
+        return request;
+    }
+
+    private static final String FACEBOOK_UPLOAD_PHOTO = FACEBOOK_SERVER + "/v2.6/me/photos?access_token=%s";
+
+    public Request getFacebookUpload(Object tag, String token,
+                                     String caption,
+                                     File file,
+                                     OnResultListener<FacebookUploadResult> listener) {
+        String url = String.format(FACEBOOK_UPLOAD_PHOTO, token);
+
+        RequestBody body = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("caption", caption)
+                .addFormDataPart("picture", file.getName(),
+                        RequestBody.create(MediaType.parse("image/jpeg"), file))
+                .build();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+
+        final NetworkResult<FacebookUploadResult> result = new NetworkResult<>();
+        result.request = request;
+        result.listener = listener;
+        mClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                result.excpetion = e;
+                mHandler.sendMessage(mHandler.obtainMessage(MESSAGE_FAIL, result));
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String text = response.body().string();
+                    FacebookUploadResult data = gson.fromJson(text, FacebookUploadResult.class);
+                    result.result = data;
+                    mHandler.sendMessage(mHandler.obtainMessage(MESSAGE_SUCCESS, result));
+                } else {
+                    throw new IOException(response.message());
+                }
+            }
+        });
+        return request;
+    }
 }

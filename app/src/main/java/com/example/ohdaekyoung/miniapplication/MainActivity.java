@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.ohdaekyoung.miniapplication.Chatting.ChattingFragment;
 import com.example.ohdaekyoung.miniapplication.facebook.FacebookFragment;
@@ -20,7 +22,8 @@ import com.example.ohdaekyoung.miniapplication.youtube.YoutubeFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    ImageView profileView;
+    TextView nameView, emailView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,15 +31,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-      /*  FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -46,11 +40,21 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView=navigationView.getHeaderView(0);
+        profileView = (ImageView)headerView.findViewById(R.id.image_profile);
+        nameView = (TextView)headerView.findViewById(R.id.text_name);
+        emailView = (TextView)headerView.findViewById(R.id.text_email);
         if(savedInstanceState==null)//맨처음 구동되면
         {
             getSupportFragmentManager().beginTransaction().add(R.id.container,new TStoreFragment()).commit();
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+       // setMyInfo();
     }
 
     @Override

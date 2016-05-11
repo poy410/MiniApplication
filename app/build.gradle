@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.ohdaekyoung.miniapplication"
-        minSdkVersion 10
+        minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -30,4 +30,5 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'com.squareup.okhttp3:okhttp-urlconnection:3.2.0'
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
 }
